@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.kuimov.secretsanta.dto.GroupDTO;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "groups")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +23,15 @@ public class Group {
 
     private String description;
 
-    @OneToMany
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Participant> participants;
+
+    public GroupDTO toDTO() {
+        return new GroupDTO(id, name, description);
+    }
+
+    public void updateFromDto(GroupDTO groupDTO){
+        name = groupDTO.getName();
+        description = groupDTO.getDescription();
+    }
 }

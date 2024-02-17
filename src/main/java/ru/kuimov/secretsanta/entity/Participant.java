@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "participants")
 public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +19,10 @@ public class Participant {
     private String name;
 
     private String wish;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "groups_id")
+    private Group group;
 
     @OneToOne
     private Participant recipient;
