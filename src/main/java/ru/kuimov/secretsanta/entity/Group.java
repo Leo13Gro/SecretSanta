@@ -34,4 +34,6 @@ public class Group {
         name = groupDTO.getName();
         description = groupDTO.getDescription();
     }
+
+
 }
