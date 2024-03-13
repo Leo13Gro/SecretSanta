@@ -1,16 +1,17 @@
 package ru.kuimov.secretsanta.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import ru.kuimov.secretsanta.dto.ParticipantDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity(name = "participants")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,10 +21,16 @@ public class Participant {
 
     private String wish;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "groups_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
     private Group group;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private Participant recipient;
+
+    public ParticipantDTO toDTO(){
+        return new ParticipantDTO(id, name, wish, recipient);
+    }
 }
