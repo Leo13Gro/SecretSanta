@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GroupRequestToCreate {
+public class GroupRequestToCreateOrUpdate {
     private Long id;
     @NotBlank
     private String name;

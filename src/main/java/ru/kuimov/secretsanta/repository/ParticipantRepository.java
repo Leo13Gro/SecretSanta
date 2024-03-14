@@ -6,4 +6,6 @@ import ru.kuimov.secretsanta.entity.Participant;
 
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
+
+    Participant findByRecipient_Id(Long id);
 }

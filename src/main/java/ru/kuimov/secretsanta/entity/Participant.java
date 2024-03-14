@@ -22,12 +22,7 @@ public class Participant {
     private String wish;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private Group group;
-
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Participant recipient;
 
     public ParticipantDTO toDTO(){

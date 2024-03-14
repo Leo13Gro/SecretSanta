@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.kuimov.secretsanta.dto.GroupDTO;
-import ru.kuimov.secretsanta.dto.GroupRequestToCreate;
+import ru.kuimov.secretsanta.dto.GroupRequestToCreateOrUpdate;
 import ru.kuimov.secretsanta.dto.ParticipantDTO;
 import ru.kuimov.secretsanta.entity.Group;
 import ru.kuimov.secretsanta.entity.Participant;
@@ -22,7 +22,7 @@ public class SantaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long addGroup(@Valid @RequestBody GroupRequestToCreate request){
+    public Long addGroup(@Valid @RequestBody GroupRequestToCreateOrUpdate request){
         return santaService.addGroup(request);
     }
 
@@ -32,7 +32,7 @@ public class SantaController {
     }
 
     @GetMapping("/{id}")
-    public GroupDTO getGroupDTOById(@PathVariable Long id){
+    public GroupDTO getGroupById(@PathVariable Long id){
         return santaService.getGroupDTOById(id);
     }
 

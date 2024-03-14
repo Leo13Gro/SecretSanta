@@ -1,7 +1,7 @@
 package ru.kuimov.secretsanta.service;
 
 import ru.kuimov.secretsanta.dto.GroupDTO;
-import ru.kuimov.secretsanta.dto.GroupRequestToCreate;
+import ru.kuimov.secretsanta.dto.GroupRequestToCreateOrUpdate;
 import ru.kuimov.secretsanta.dto.ParticipantDTO;
 import ru.kuimov.secretsanta.entity.Group;
 import ru.kuimov.secretsanta.entity.Participant;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface SantaService {
     List<Group> getAllGroups();
 
-    Long addGroup(GroupRequestToCreate request);
+    Long addGroup(GroupRequestToCreateOrUpdate request);
 
     Group getGroupById(Long id);
 

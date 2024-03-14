@@ -27,7 +27,7 @@ public class Group {
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Participant> participants;
 
     public GroupDTO toDTO() {

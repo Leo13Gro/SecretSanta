@@ -3,7 +3,7 @@ package ru.kuimov.secretsanta.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kuimov.secretsanta.dto.GroupDTO;
-import ru.kuimov.secretsanta.dto.GroupRequestToCreate;
+import ru.kuimov.secretsanta.dto.GroupRequestToCreateOrUpdate;
 import ru.kuimov.secretsanta.dto.ParticipantDTO;
 import ru.kuimov.secretsanta.entity.Group;
 import ru.kuimov.secretsanta.entity.Participant;
@@ -27,7 +27,7 @@ public class SantaServiceImpl implements SantaService{
     }
 
     @Override
-    public Long addGroup(GroupRequestToCreate request) {
+    public Long addGroup(GroupRequestToCreateOrUpdate request) {
         Group group = new Group();
         group.setName(request.getName());
         group.setDescription(request.getDescription());
@@ -60,7 +60,6 @@ public class SantaServiceImpl implements SantaService{
     @Override
     public Long addParticipantToGroupById(Long id, Participant participant) {
         Group groupToAdd = getGroupById(id);
-        participant.setGroup(groupToAdd);
         Long participantId = participantRepository.saveAndFlush(participant).getId();
         List<Participant> participantListInGroup = groupToAdd.getParticipants();
         participantListInGroup.add(participant);
@@ -75,7 +74,15 @@ public class SantaServiceImpl implements SantaService{
         Participant participantToDelete = participantRepository.findById(participantId).orElseThrow();
         List<Participant> participantListInGroup = groupToDelete.getParticipants();
         participantListInGroup.remove(participantToDelete);
+
+        System.out.println(participantListInGroup);
+
         groupToDelete.setParticipants(participantListInGroup);
+
+        Participant participantOwnerRecipient = participantRepository.findByRecipient_Id(participantId);
+        participantOwnerRecipient.setRecipient(null);
+        participantRepository.saveAndFlush(participantOwnerRecipient);
+
         participantRepository.deleteById(participantId);
         groupRepository.save(groupToDelete);
     }
