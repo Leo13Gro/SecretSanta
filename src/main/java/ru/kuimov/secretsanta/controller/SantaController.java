@@ -1,5 +1,7 @@
 package ru.kuimov.secretsanta.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,28 +18,33 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/group")
+@Tag(name = "Secret Santa API", description = "API for Secret Santa Game")
 public class SantaController {
 
     private final SantaService santaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Add new group")
     public Long addGroup(@Valid @RequestBody GroupRequestToCreateOrUpdate request){
         return santaService.addGroup(request);
     }
 
     @GetMapping
+    @Operation(summary = "Get all groups")
     public List<Group> getAllGroups(){
         return santaService.getAllGroups();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get group by id")
     public GroupDTO getGroupById(@PathVariable Long id){
         return santaService.getGroupDTOById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update group by id")
     public void updateGroupById(@PathVariable Long id, @RequestBody GroupDTO groupDTO){
         santaService.updateGroupById(id, groupDTO);
     }
