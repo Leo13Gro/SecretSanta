@@ -1,5 +1,5 @@
 # Secret Santa service
-RESTFull API Service for playing Secret Santa
+RESTFul API Service for playing Secret Santa
 
 ## Описание настройки и запуска приложения
 1) Скачайте репозиторий: git clone https://github.com/Leo13Gro/SecretSanta.git
